@@ -1,0 +1,416 @@
+# Consultant Booking – Translation Template
+# Copyright (C) 2026 ahnSolution
+# This file is distributed under the same license as the Consultant Booking plugin.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Consultant Booking 1.0.0\n"
+"Report-Msgid-Bugs-To: https://ahnsolution.com/plugins/consultant-booking\n"
+"POT-Creation-Date: 2026-05-01 11:11+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: custom-extractor\n"
+"X-Domain: consultant-booking\n"
+
+#: consultant-booking.php:36
+
+msgid "Consultant Booking plugin error: Composer dependencies are missing. Please run \"composer install\" in the plugin directory."
+msgstr ""
+#: includes/Controllers/Booking.php:41
+
+msgid "Booking Title"
+msgstr ""
+#: includes/Controllers/Booking.php:42
+#: includes/Models/Consultant.php:34
+
+msgid "Consultant"
+msgstr ""
+#: includes/Controllers/Booking.php:43
+
+msgid "Student"
+msgstr ""
+#: includes/Controllers/Booking.php:44
+
+msgid "Date & Time"
+msgstr ""
+#: includes/Controllers/Booking.php:45
+
+msgid "Payment"
+msgstr ""
+#: includes/Controllers/Booking.php:136
+
+msgid "Security check failed. Please refresh the page and try again."
+msgstr ""
+#: includes/Controllers/Booking.php:173
+
+msgid "Consultant is not available on the selected date. Please choose another time."
+msgstr ""
+#: includes/Controllers/Booking.php:174
+#: includes/Controllers/Booking.php:212
+#: includes/Controllers/Booking.php:261
+
+msgid "Booking Error"
+msgstr ""
+#: includes/Controllers/Booking.php:211
+
+msgid "This time slot is already booked. Please choose another time."
+msgstr ""
+#: includes/Controllers/Booking.php:260
+
+msgid "Booking could not be saved. Please try again."
+msgstr ""
+#: includes/Controllers/Booking.php:335
+
+msgid "Your Booking Invoice - Booking #%s"
+msgstr ""
+#: includes/Controllers/Booking.php:340
+
+msgid "Dear %s,\n\nThank you for your booking. Please find your invoice attached.\n\nBest regards,\nConsultant Booking Team"
+msgstr ""
+#: includes/Controllers/Consultant.php:247
+
+msgid "Invalid nonce."
+msgstr ""
+#: includes/Controllers/Consultant.php:254
+
+msgid "Search term is too short."
+msgstr ""
+#: includes/Controllers/Consultant.php:275
+
+msgid "No consultants found."
+msgstr ""
+#: includes/Models/Booking.php:33
+
+msgid "Bookings"
+msgstr ""
+#: includes/Models/Booking.php:34
+
+msgid "Booking"
+msgstr ""
+#: includes/Models/Booking.php:35
+#: includes/Models/Consultant.php:35
+
+msgid "Add New"
+msgstr ""
+#: includes/Models/Booking.php:36
+
+msgid "Add New Booking"
+msgstr ""
+#: includes/Models/Booking.php:37
+
+msgid "Edit Booking"
+msgstr ""
+#: includes/Models/Booking.php:38
+
+msgid "New Booking"
+msgstr ""
+#: includes/Models/Booking.php:39
+
+msgid "View Booking"
+msgstr ""
+#: includes/Models/Booking.php:40
+
+msgid "View Bookings"
+msgstr ""
+#: includes/Models/Booking.php:41
+
+msgid "Search Bookings"
+msgstr ""
+#: includes/Models/Booking.php:42
+
+msgid "No bookings found"
+msgstr ""
+#: includes/Models/Booking.php:43
+
+msgid "No bookings found in Trash"
+msgstr ""
+#: includes/Models/Booking.php:44
+
+msgid "All Bookings"
+msgstr ""
+#: includes/Models/Booking.php:45
+
+msgid "Booking Archives"
+msgstr ""
+#: includes/Models/Booking.php:70
+
+msgid "Booking Information"
+msgstr ""
+#: includes/Models/Booking.php:97
+
+msgid "Consultant Name"
+msgstr ""
+#: includes/Models/Booking.php:101
+
+msgid "Student Name"
+msgstr ""
+#: includes/Models/Booking.php:105
+
+msgid "Student Email"
+msgstr ""
+#: includes/Models/Booking.php:109
+
+msgid "Student Phone"
+msgstr ""
+#: includes/Models/Booking.php:113
+
+msgid "Booking Time"
+msgstr ""
+#: includes/Models/Booking.php:117
+
+msgid "Booking Note"
+msgstr ""
+#: includes/Models/Booking.php:121
+#: templates/form/booking-form.php:75
+
+msgid "Payment Method"
+msgstr ""
+#: includes/Models/Consultant.php:33
+#: includes/Settings.php:62
+#: includes/Settings.php:63
+
+msgid "Consultants"
+msgstr ""
+#: includes/Models/Consultant.php:36
+
+msgid "Add New Consultant"
+msgstr ""
+#: includes/Models/Consultant.php:37
+
+msgid "Edit Consultant"
+msgstr ""
+#: includes/Models/Consultant.php:38
+
+msgid "New Consultant"
+msgstr ""
+#: includes/Models/Consultant.php:39
+
+msgid "View Consultant"
+msgstr ""
+#: includes/Models/Consultant.php:40
+
+msgid "View Consultants"
+msgstr ""
+#: includes/Models/Consultant.php:41
+
+msgid "Search Consultants"
+msgstr ""
+#: includes/Models/Consultant.php:42
+
+msgid "No consultants found"
+msgstr ""
+#: includes/Models/Consultant.php:43
+
+msgid "No consultants found in Trash"
+msgstr ""
+#: includes/Models/Consultant.php:44
+
+msgid "All Consultants"
+msgstr ""
+#: includes/Models/Consultant.php:45
+
+msgid "Consultant Archives"
+msgstr ""
+#: includes/Models/Consultant.php:70
+
+msgid "Consultant Information"
+msgstr ""
+#: includes/Models/Consultant.php:102
+
+msgid "Designation / Specialty:"
+msgstr ""
+#: includes/Models/Consultant.php:106
+
+msgid "Phone:"
+msgstr ""
+#: includes/Models/Consultant.php:110
+
+msgid "Email:"
+msgstr ""
+#: includes/Models/Consultant.php:114
+
+msgid "Visiting Price:"
+msgstr ""
+#: includes/Models/Consultant.php:118
+
+msgid "Social Media Links"
+msgstr ""
+#: includes/Models/Consultant.php:126
+
+msgid "Add Social Link"
+msgstr ""
+#: includes/Models/Consultant.php:128
+
+msgid "Weekly Availability"
+msgstr ""
+#: includes/Models/Consultant.php:134
+
+msgid "Add Availability"
+msgstr ""
+#: includes/Models/Consultant.php:148
+
+msgid "Facebook"
+msgstr ""
+#: includes/Models/Consultant.php:149
+
+msgid "LinkedIn"
+msgstr ""
+#: includes/Models/Consultant.php:150
+
+msgid "Instagram"
+msgstr ""
+#: includes/Models/Consultant.php:151
+
+msgid "YouTube"
+msgstr ""
+#: includes/Models/Consultant.php:162
+#: includes/Models/Consultant.php:193
+
+msgid "Remove"
+msgstr ""
+#: includes/Models/Consultant.php:178
+
+msgid "Day:"
+msgstr ""
+#: includes/Models/Consultant.php:187
+
+msgid "From:"
+msgstr ""
+#: includes/Models/Consultant.php:190
+
+msgid "To:"
+msgstr ""
+#: includes/Payments/Cancel.php:28
+
+msgid "Payment Cancelled"
+msgstr ""
+#: includes/Payments/Cancel.php:29
+
+msgid "Your payment was cancelled. Please try again or choose a different payment method."
+msgstr ""
+#: includes/Payments/Success.php:34
+
+msgid "Invalid payment session."
+msgstr ""
+#: includes/Payments/Success.php:41
+
+msgid "Stripe is not configured."
+msgstr ""
+#: includes/Payments/Success.php:50
+
+msgid "Payment not completed."
+msgstr ""
+#: includes/Payments/Success.php:53
+
+msgid "Payment verification failed."
+msgstr ""
+#: includes/Payments/Success.php:58
+
+msgid "Thank you!"
+msgstr ""
+#: includes/Payments/Success.php:59
+
+msgid "Your booking payment was successful."
+msgstr ""
+#: includes/Settings.php:51
+#: includes/Settings.php:52
+
+msgid "Appointment"
+msgstr ""
+#: includes/Settings.php:70
+#: includes/Settings.php:71
+
+msgid "Booking List"
+msgstr ""
+#: includes/Settings.php:78
+#: includes/Settings.php:79
+
+msgid "Settings"
+msgstr ""
+#: includes/Settings.php:98
+
+msgid "Appointment Settings"
+msgstr ""
+#: includes/Settings.php:99
+
+msgid "Settings page not found."
+msgstr ""
+#: includes/TemplatesManager.php:19
+#: templates/form/booking-form.php:86
+
+msgid "Book Appointment"
+msgstr ""
+#: includes/Views/admin/settings.php:5
+
+msgid "Appoinment Settings"
+msgstr ""
+#: includes/class-consultant-booking.php:165
+
+msgid "Booking Sidebar"
+msgstr ""
+#: templates/form/booking-form.php:20
+
+msgid "Invalid consultant selected."
+msgstr ""
+#: templates/form/booking-form.php:26
+
+msgid "Booking submitted successfully!"
+msgstr ""
+#: templates/form/booking-form.php:40
+
+msgid "Consult Fee:"
+msgstr ""
+#: templates/form/booking-form.php:52
+
+msgid "Your Name"
+msgstr ""
+#: templates/form/booking-form.php:56
+
+msgid "Your Email"
+msgstr ""
+#: templates/form/booking-form.php:63
+
+msgid "Your Phone"
+msgstr ""
+#: templates/form/booking-form.php:67
+
+msgid "Preferred Date & Time"
+msgstr ""
+#: templates/form/booking-form.php:72
+
+msgid "Information"
+msgstr ""
+#: templates/form/booking-form.php:73
+
+msgid "Please provide your academic result, IELTS score, desired country"
+msgstr ""
+#: templates/form/booking-form.php:77
+
+msgid "Select a payment method"
+msgstr ""
+#: templates/form/booking-form.php:78
+
+msgid "Cash on visit"
+msgstr ""
+#: templates/form/booking-form.php:79
+
+msgid "Online Payment"
+msgstr ""
+#: templates/form/searchform-consultant.php:14
+
+msgid "Search for:"
+msgstr ""
+#: templates/form/searchform-consultant.php:15
+
+msgid "Search Consultants…"
+msgstr ""
+#: templates/form/searchform-consultant.php:17
+
+msgid "Search"
+msgstr ""

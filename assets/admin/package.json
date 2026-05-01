@@ -1,0 +1,20 @@
+{
+  "name": "consultant-booking",
+  "version": "1.0.0",
+  "description": "Consultant Booking Plugin",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@wordpress/notices": "^5.26.0",
+    "@wordpress/plugins": "^7.26.0",
+    "@wordpress/scripts": "^31.2.0"
+  }
+}

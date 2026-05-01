@@ -1,0 +1,93 @@
+.social-row,
+.availability-row {
+    margin-bottom: 10px;
+}
+
+.remove-row {
+    margin-left: 10px;
+    color: red;
+}
+
+#social-repeater,
+#availability-container {
+    margin-bottom: 20px;
+}
+
+.social-row,
+.availability-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    background: #f9f9f9;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #e2e2e2;
+}
+
+.social-row select,
+.availability-row select,
+.social-row input[type="url"],
+.availability-row input[type="time"],
+input[type="text"],
+input[type="email"],
+input[type="number"] {
+    padding: 6px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-width: 150px;
+}
+
+.availability-row label {
+    font-weight: 500;
+    margin-right: 5px;
+}
+
+button#add-social,
+button#add-availability {
+    background-color: #2271b1;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.remove-row {
+    background: #d63638;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+h4 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin: 8px 0 4px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"] {
+    width: 250px;
+    max-width: 100%;
+}
+
+.components-button {
+    margin-bottom: 10px;
+}

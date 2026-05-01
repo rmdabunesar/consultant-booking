@@ -1,0 +1,21 @@
+{
+    "name": "ahn/consultant-booking",
+    "description": "A WordPress plugin for Consultant Appointment Booking",
+    "license": "GPL-2.0-or-later",
+    "version": "1.0.0",
+    "autoload": {
+        "psr-4": {
+            "Ahn\\ConsultantBooking\\": "includes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ahnSolution",
+            "email": "info@ahnsolution.com"
+        }
+    ],
+    "require": {
+        "dompdf/dompdf": "^3.1",
+        "stripe/stripe-php": "^19.2"
+    }
+}

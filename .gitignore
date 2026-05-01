@@ -1,0 +1,65 @@
+# ==============================
+# WordPress Plugin – .gitignore
+# ==============================
+
+# Composer dependencies (install on deployment with `composer install --no-dev`)
+/vendor/
+
+# Node / npm dependencies (build with `npm run build` in assets/admin/)
+node_modules/
+/assets/admin/node_modules/
+
+# Build artifacts – commit only if you want to ship pre-built JS
+# Comment out these two lines if you prefer to commit the built assets:
+# /assets/admin/build/
+
+# npm lock file – keep package-lock.json but ignore the folder
+package-lock.json
+
+# Composer lock alternative
+composer.json.new
+
+# OS-generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDE / editor files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# PHP environment / debug
+.env
+.env.*
+wp-config.php
+error_log
+*.log
+debug.log
+
+# Generated invoice PDFs (temporary files written to uploads, not tracked)
+/uploads/cb-invoice/
+
+# PHPUnit
+phpunit.xml
+.phpunit.result.cache
+/tests/
+/coverage/
+
+# PHPCS
+.phpcs.xml.dist
+phpcs.xml
+
+# Misc
+*.bak
+*.tmp
+*.orig
