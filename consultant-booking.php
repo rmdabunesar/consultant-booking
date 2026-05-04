@@ -2,11 +2,11 @@
 
 /**
  * Plugin Name: Consultant Booking
- * Plugin URI: https://ahnsolution.com/plugins/consultant-booking
+ * Plugin URI: https://github.com/rmdabunesar/consultant-booking
  * Description: A simple plugin that allows students to book consultation sessions with scholarship advisors.
  * Version: 1.0.0
- * Author: ahnSolution
- * Author URI: https://ahnsolution.com
+ * Author: Abu Nesar
+ * Author URI: https://github.com/rmdabunesar
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: consultant-booking
