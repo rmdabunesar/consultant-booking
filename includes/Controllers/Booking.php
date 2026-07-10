@@ -27,6 +27,9 @@ class Booking {
 		add_filter( 'manage_cb_booking_posts_columns', array( self::class, 'cb_booking_custom_columns' ) );
 		add_action( 'manage_cb_booking_posts_custom_column', array( self::class, 'cb_booking_custom_column_content' ), 10, 2 );
 		add_shortcode( 'cb_booking_form', array( self::class, 'cb_booking_form_shortcode' ) );
+
+		// Must run before any output so the post-submission redirects can send headers.
+		add_action( 'template_redirect', array( self::class, 'cb_handle_booking_submission' ) );
 	}
 
 	/**
@@ -94,11 +97,9 @@ class Booking {
 		);
 
 		// Prefer URL parameter over shortcode attribute.
-		$consultant_id = isset( $_GET['consultant_id'] ) ? intval( $_GET['consultant_id'] ) : intval( $atts['consultant_id'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$consultant_id = isset( $_GET['consultant_id'] ) ? intval( $_GET['consultant_id'] ) : intval( $atts['consultant_id'] ); 
 
 		ob_start();
-
-		self::cb_handle_booking_submission();
 
 		$consultant_name        = get_the_title( $consultant_id );
 		$consultant_fee         = get_post_meta( $consultant_id, '_consultant_fee', true );
@@ -159,7 +160,7 @@ class Booking {
 				if (
 					$time_slot['day'] === $appointment_day &&
 					$appointment_time >= $time_slot['from'] &&
-					$appointment_time <= $time_slot['to']
+					$appointment_time < $time_slot['to']
 				) {
 					$is_available = true;
 					break;
@@ -216,31 +217,12 @@ class Booking {
 
 		wp_reset_postdata();
 
-		// Increment booking order number before saving.
-		$last_number = intval( get_option( '_cb_last_booking_number', 1000 ) );
-		$new_number  = $last_number + 1;
+		// Persist the booking for both cash and online payments so every
+		// booking has a record and an invoice reference number.
+		$payment_status = ( 'online' === $payment ) ? 'pending' : 'paid';
 
-		// Route to Stripe for online payments.
-		if ( 'online' === $payment ) {
-			$stripe = new Stripe(
-				get_option( '_cb_secret_key' ),
-				get_option( '_cb_publishable_key' ),
-				strtolower( get_option( '_cb_currency_code', 'usd' ) ),
-				$amount * 100, // Stripe expects amount in cents.
-				'Booking #' . $new_number . ' (' . $consultant_name . ')'
-			);
-
-			$session = $stripe->create_checkout_session();
-			wp_redirect( esc_url_raw( $session->url ) );
-			exit;
-		}
-
-		// Save booking post for cash payments.
-		$booking_post = array(
-			'post_title'  => '',
-			'post_type'   => 'cb_booking',
-			'post_status' => 'publish',
-			'meta_input'  => array(
+		$booking_id = self::cb_save_booking(
+			array(
 				'_consultant_id'        => $consultant_id,
 				'_consultant_name'      => $consultant_name,
 				'_student_name'         => $student_name,
@@ -250,17 +232,79 @@ class Booking {
 				'_notes'                => $notes,
 				'_payment_method'       => $payment,
 				'_amount'               => $amount,
+				'_payment_status'       => $payment_status,
 			),
+			$student_name
 		);
 
-		$booking_id = wp_insert_post( $booking_post );
-
-		if ( is_wp_error( $booking_id ) ) {
+		if ( is_wp_error( $booking_id ) || ! $booking_id ) {
 			wp_die(
 				esc_html__( 'Booking could not be saved. Please try again.', 'consultant-booking' ),
 				esc_html__( 'Booking Error', 'consultant-booking' ),
 				array( 'back_link' => true )
 			);
+		}
+
+		$booking_number = get_post_meta( $booking_id, '_booking_order_number', true );
+
+		// Route to Stripe for online payments.
+		if ( 'online' === $payment ) {
+			$stripe = new Stripe(
+				get_option( '_cb_secret_key' ),
+				get_option( '_cb_publishable_key' ),
+				strtolower( get_option( '_cb_currency_code', 'usd' ) ),
+				$amount * 100, // Stripe expects amount in cents.
+				'Booking #' . $booking_number . ' (' . $consultant_name . ')',
+				$booking_id
+			);
+
+			$session = $stripe->create_checkout_session();
+			wp_redirect( esc_url_raw( $session->url ) );
+			exit;
+		}
+
+		// Cash: generate + email the invoice, then redirect to the success page.
+		self::cb_send_booking_email( $booking_id );
+
+		$success_page_id = get_option( '_cb_success_page_id' );
+		$success_page    = $success_page_id ? get_post( $success_page_id ) : null;
+		$success_base    = $success_page ? get_permalink( $success_page ) : get_permalink();
+
+		$redirect_url = add_query_arg(
+			array(
+				'booking'    => 'success',
+				'booking_id' => $booking_id,
+			),
+			$success_base
+		);
+
+		wp_safe_redirect( $redirect_url );
+		exit;
+	}
+
+	/**
+	 * Persist a cb_booking post and reserve its invoice order number.
+	 *
+	 * @param array  $meta         Post meta to store on the booking.
+	 * @param string $student_name Student name used for the human-readable title.
+	 * @return int|\WP_Error The new booking post ID, or a WP_Error on failure.
+	 */
+	public static function cb_save_booking( array $meta, string $student_name ) {
+		// Reserve the next booking order number.
+		$last_number = intval( get_option( '_cb_last_booking_number', 1000 ) );
+		$new_number  = $last_number + 1;
+
+		$booking_id = wp_insert_post(
+			array(
+				'post_title'  => '',
+				'post_type'   => 'cb_booking',
+				'post_status' => 'publish',
+				'meta_input'  => $meta,
+			)
+		);
+
+		if ( is_wp_error( $booking_id ) || ! $booking_id ) {
+			return $booking_id;
 		}
 
 		update_post_meta( $booking_id, '_booking_order_number', $new_number );
@@ -274,22 +318,20 @@ class Booking {
 			)
 		);
 
-		self::cb_send_booking_email( $booking_id );
-
-		wp_safe_redirect( add_query_arg( 'booking', 'success', get_permalink() ) );
-		exit;
+		return $booking_id;
 	}
 
 	/**
-	 * Generate a PDF invoice and email it to the student.
+	 * Generate a PDF invoice for a booking and store it in the uploads folder.
 	 *
-	 * The PDF is written to a temporary upload subfolder, attached to the
-	 * email, then deleted from disk immediately after sending.
+	 * The file is written to uploads/cb-invoice/invoice_booking_{number}.pdf and
+	 * kept on disk so it can be attached to emails and offered as a download on
+	 * the success page. Returns the absolute file path.
 	 *
 	 * @param int $booking_id Booking post ID.
+	 * @return string Absolute path to the generated PDF file.
 	 */
-	public static function cb_send_booking_email( $booking_id ) {
-		$student_email        = get_post_meta( $booking_id, '_student_email', true );
+	public static function cb_generate_invoice_pdf( $booking_id ): string {
 		$student_name         = get_post_meta( $booking_id, '_student_name', true );
 		$consultant_name      = get_post_meta( $booking_id, '_consultant_name', true );
 		$appointment_datetime = get_post_meta( $booking_id, '_appointment_datetime', true );
@@ -316,7 +358,7 @@ class Booking {
 		$dompdf->render();
 		$pdf_output = $dompdf->output();
 
-		// Write PDF to a temporary file inside the uploads directory.
+		// Write PDF to a dedicated subfolder inside the uploads directory.
 		$upload_dir    = wp_upload_dir();
 		$custom_folder = $upload_dir['basedir'] . '/cb-invoice';
 
@@ -329,6 +371,25 @@ class Booking {
 
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
 		file_put_contents( $pdf_path, $pdf_output );
+
+		return $pdf_path;
+	}
+
+	/**
+	 * Generate the invoice PDF and email it to the student as an attachment.
+	 *
+	 * The PDF is kept on disk after sending so it remains available for download
+	 * from the booking success page.
+	 *
+	 * @param int $booking_id Booking post ID.
+	 */
+	public static function cb_send_booking_email( $booking_id ) {
+		$student_email  = get_post_meta( $booking_id, '_student_email', true );
+		$student_name   = get_post_meta( $booking_id, '_student_name', true );
+		$booking_number = get_post_meta( $booking_id, '_booking_order_number', true );
+
+		// Generate (and persist) the invoice PDF.
+		$pdf_path = self::cb_generate_invoice_pdf( $booking_id );
 
 		$subject     = sprintf(
 			/* translators: %s: booking reference number */
@@ -344,10 +405,5 @@ class Booking {
 		$attachments = array( $pdf_path );
 
 		wp_mail( $student_email, $subject, $message, $headers, $attachments );
-
-		// Remove temporary PDF after sending.
-		if ( file_exists( $pdf_path ) ) {
-			wp_delete_file( $pdf_path );
-		}
 	}
 }

@@ -15,16 +15,6 @@
  */
 
 defined( 'ABSPATH' ) || exit;
-
-if ( ! $consultant_id || get_post_type( $consultant_id ) !== 'cb_consultant' ) {
-	echo '<div style="padding:40px;font-size:20px;color:red;">' . esc_html__( 'Invalid consultant selected.', 'consultant-booking' ) . '</div>';
-	return;
-}
-
-// Show success message after a redirect-back submission.
-if ( isset( $_GET['booking'] ) && 'success' === $_GET['booking'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	echo '<div class="cb-notice cb-notice--success"><p>' . esc_html__( 'Booking submitted successfully!', 'consultant-booking' ) . '</p></div>';
-}
 ?>
 
 <div class="appointment-form">

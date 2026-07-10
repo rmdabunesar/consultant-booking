@@ -66,6 +66,13 @@ class Stripe {
 	private $cancel_slug;
 
 	/**
+	 * Booking post ID this payment belongs to.
+	 *
+	 * @var int
+	 */
+	private $booking_id;
+
+	/**
 	 * Constructor – configures Stripe and resolves redirect page slugs.
 	 *
 	 * @param string $secret_key      Stripe secret key.
@@ -73,13 +80,15 @@ class Stripe {
 	 * @param string $currency        Three-letter ISO currency code.
 	 * @param int    $amount          Amount in the smallest currency unit.
 	 * @param string $name            Line-item name for the Checkout session.
+	 * @param int    $booking_id      Booking post ID to reference on return.
 	 */
-	public function __construct( $secret_key, $publishable_key, $currency, $amount, $name ) {
+	public function __construct( $secret_key, $publishable_key, $currency, $amount, $name, $booking_id = 0 ) {
 		$this->secret_key      = $secret_key;
 		$this->publishable_key = $publishable_key;
 		$this->currency        = $currency;
 		$this->amount          = $amount;
 		$this->name            = $name;
+		$this->booking_id      = (int) $booking_id;
 
 		$success_page_id   = get_option( '_cb_success_page_id' );
 		$cancel_page_id    = get_option( '_cb_cancel_page_id' );
@@ -113,7 +122,7 @@ class Stripe {
 					),
 				),
 				'mode'        => 'payment',
-				'success_url' => home_url( '/' . $this->success_slug . '?session_id={CHECKOUT_SESSION_ID}' ),
+				'success_url' => home_url( '/' . $this->success_slug . '?session_id={CHECKOUT_SESSION_ID}&booking_id=' . $this->booking_id ),
 				'cancel_url'  => home_url( '/' . $this->cancel_slug ),
 			)
 		);

@@ -141,7 +141,7 @@ class Consultant {
 	 * Outputs HTML for the next page of consultant cards and calls wp_die().
 	 */
 	public function cb_load_more() {
-		$paged          = isset( $_GET['paged'] ) ? intval( $_GET['paged'] ) : 1; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$paged          = isset( $_GET['paged'] ) ? intval( $_GET['paged'] ) : 1; 
 		$posts_per_page = get_option( '_cb_consultants_per_page', 6 );
 
 		$consultants = new WP_Query(

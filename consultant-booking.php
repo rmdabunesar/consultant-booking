@@ -4,7 +4,7 @@
  * Plugin Name: Consultant Booking
  * Plugin URI: https://github.com/rmdabunesar/consultant-booking
  * Description: A simple plugin that allows students to book consultation sessions with scholarship advisors.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Abu Nesar
  * Author URI: https://github.com/rmdabunesar
  * License: GPL-2.0+
@@ -44,3 +44,17 @@ if (file_exists(CB_PLUGIN_DIR . 'vendor/autoload.php')) {
  */
 require_once CB_PLUGIN_DIR . 'includes/class-consultant-booking.php';
 require_once CB_PLUGIN_DIR . 'functions.php';
+
+/**
+ * Load procedural shortcode handlers.
+ *
+ * These files register shortcodes at file scope and are not classes, so the
+ * PSR-4 autoloader never loads them – they must be required explicitly.
+ */
+require_once CB_PLUGIN_DIR . 'includes/Payments/Success.php';
+require_once CB_PLUGIN_DIR . 'includes/Payments/Cancel.php';
+
+/**
+ * Create required pages and seed options on activation.
+ */
+register_activation_hook( __FILE__, array( 'Ahn\ConsultantBooking\Activator', 'activate' ) );
