@@ -20,7 +20,7 @@ use Ahn\ConsultantBooking\Controllers\Booking;
 /**
  * Register success shortcode on load.
  */
-add_shortcode( 'cb_booking_success', 'Ahn\ConsultantBooking\Payments\cb_booking_success_shortcode' );
+add_shortcode( 'cb_booking_success', 'cb_booking_success_shortcode' );
 
 /**
  * Render the booking payment success message with an invoice download link.
