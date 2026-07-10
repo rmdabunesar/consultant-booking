@@ -27,14 +27,14 @@ add_shortcode( 'cb_booking_success', 'cb_booking_success_shortcode' );
  *
  * @return string HTML output for the shortcode.
  */
-function cb_booking_success_shosrtcode() {
-	$booking_id  = isset( $_GET['booking_id'] ) ? absint( wp_unslash( $_GET['booking_id'] ) ) : 0; // 
-	$has_session = ! empty( $_GET['session_id'] ); // 
+function cb_booking_success_shortcode() {
+	$booking_id  = isset( $_GET['booking_id'] ) ? absint( wp_unslash( $_GET['booking_id'] ) ) : 0;  
+	$has_session = ! empty( $_GET['session_id'] );  
 	$amount_paid = '';
 
 	// Verify online/Stripe payments against the Checkout session.
 	if ( $has_session ) {
-		$session_id = sanitize_text_field( wp_unslash( $_GET['session_id'] ) ); // 
+		$session_id = sanitize_text_field( wp_unslash( $_GET['session_id'] ) );  
 		$secret_key = get_option( '_cb_secret_key' );
 
 		if ( ! $secret_key ) {
