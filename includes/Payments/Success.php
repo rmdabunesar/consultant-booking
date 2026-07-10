@@ -20,7 +20,7 @@ use Ahn\ConsultantBooking\Controllers\Booking;
 /**
  * Register success shortcode on load.
  */
-add_shortcode( 'cb_booking_success', 'cb_booking_success_shortcode' );
+add_shortcode( 'cb_booking_success', __NAMESPACE__ . '\\cb_booking_success_shortcode' );
 
 /**
  * Render the booking payment success message with an invoice download link.
@@ -76,6 +76,8 @@ function cb_booking_success_shortcode() {
 	}
 
 	$booking_number = get_post_meta( $booking_id, '_booking_order_number', true );
+	$payment_method = get_post_meta( $booking_id, '_payment_method', true );
+	$is_cash        = ( 'cash' === $payment_method );
 
 	// Resolve the invoice PDF, generating it if it is not already on disk.
 	$upload_dir = wp_upload_dir();
@@ -107,7 +109,15 @@ function cb_booking_success_shortcode() {
 		<p style="margin:0 0 8px;color:#4b5563;font-size:16px;line-height:1.6;"><?php esc_html_e( 'Thank you — your booking payment has been received.', 'consultant-booking' ); ?></p>
 		<?php if ( $amount_paid ) : ?>
 			<p style="margin:0 0 8px;color:#1f2937;font-size:18px;font-weight:bold;">
-				<?php echo esc_html( sprintf( /* translators: %s: amount paid with currency. */ __( 'Amount Paid: %s', 'consultant-booking' ), $amount_paid ) ); ?>
+				<?php
+				if ( $is_cash ) {
+					/* translators: %s: amount due with currency. */
+					echo esc_html( sprintf( __( 'Amount Due: %s', 'consultant-booking' ), $amount_paid ) );
+				} else {
+					/* translators: %s: amount paid with currency. */
+					echo esc_html( sprintf( __( 'Amount Paid: %s', 'consultant-booking' ), $amount_paid ) );
+				}
+				?>
 			</p>
 		<?php endif; ?>
 		<p style="margin:0 0 30px;color:#6b7280;font-size:15px;line-height:1.6;"><?php esc_html_e( 'A confirmation has been sent to your email address.', 'consultant-booking' ); ?></p>
